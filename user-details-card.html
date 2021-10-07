@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .show {
+            display: block;   
+        }
+
+        .info {
+            display: flex;
+            flex-wrap: wrap;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .info > div {
+            flex-basis: 47%;
+        }
+    </style>
+</head>
+<body>
+    <div class="input">
+        <input type="text" id="name" name='name'>
+        <input type="text" id="phn" name='phn'>
+        <button id='create'>Create</button>
+    </div>
+    <div class="info">
+
+    </div>
+    <script>
+        window.addEventListener('load', function(){
+            const createBtn = document.getElementById('create');
+            createBtn.addEventListener('click', activateCard)
+        })
+
+        function activateCard(){
+            const name = document.querySelector("input[name='name']").value
+            const number = document.querySelector("input[name='phn']").value
+
+            const parent = document.querySelector('.info');
+
+            let card = createCard(name, number);
+            parent.append(card)
+        }
+
+        function createCard(name, number){
+            const card = document.createElement('div');
+            card.style.border = '1px solid black';
+            card.style.padding = '10px'
+            let nameEl = document.createElement('p');
+            nameEl.textContent = name;
+
+            let showBtn = document.createElement('button');
+            showBtn.textContent = 'Show Phone';
+            showBtn.addEventListener('click', toggleNumber)
+
+            let numberEl = document.createElement('p');
+            numberEl.textContent = number;
+            numberEl.className = 'hidden';
+            numberEl.id = 'phnEl'
+
+            card.append(nameEl, showBtn, numberEl)
+            return card;
+        }
+
+        function toggleNumber(){
+            let el = event.target.parentNode;
+            let phn = el.querySelector('#phnEl')
+            phn.classList.toggle('hidden')
+            event.target.textContent == 'Show Number' ? event.target.textContent = 'Hide Number' : event.target.textContent = 'Show Number'
+        }
+    </script>
+</body>
+</html>
